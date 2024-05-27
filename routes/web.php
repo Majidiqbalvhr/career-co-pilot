@@ -17,7 +17,7 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 Route::get('/login',[AuthController::class,'view_login'])->name('login');
 Route::post('/loginProcess',[AuthController::class,'Login'])->name('login.process');
@@ -31,4 +31,4 @@ Route::resource('roles',RoleController::class);
 Route::POST('permissions/update', [PermissionController::class, 'permissionsUpdate'])->name('permissions.update');
 
 });
-Route::resource('products',ProductController::class);
+//Route::resource('products',ProductController::class);

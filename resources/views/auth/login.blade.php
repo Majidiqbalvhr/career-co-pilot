@@ -29,14 +29,21 @@
                                         <span>Or continue with</span>
                                         <hr>
                                     </div>
-                                    <form>
+                                    <form method="post" action="{{route('login.process')}}">
+                                        @csrf
                                         <div class="input-section mail-section">
                                             <div class="icon"><i class="fa-sharp fa-regular fa-envelope"></i></div>
-                                            <input type="email" placeholder="Enter email address">
+                                            <input type="email" name="email" placeholder="Enter email address">
+                                            @error('email')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="input-section password-section">
                                             <div class="icon"><i class="fa-sharp fa-regular fa-lock"></i></div>
-                                            <input type="password" placeholder="Password">
+                                            <input type="password" name="password" placeholder="Password">
+                                            @error('password')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="forget-text"><a class="btn-read-more" href="#"><span>Forgot password</span></a></div>
                                         <button type="submit" class="btn-default">Sign In</button>
@@ -44,7 +51,7 @@
                                 </div>
                                 <div class="signup-box-footer">
                                     <div class="bottom-text">
-                                        Don't have an account? <a class="btn-read-more ml--5" href="signup.html"><span>Sign Up</span></a>
+                                        Don't have an account? <a class="btn-read-more ml--5" href="{{route('create.registration')}}"><span>Sign Up</span></a>
                                     </div>
                                 </div>
                             </div>

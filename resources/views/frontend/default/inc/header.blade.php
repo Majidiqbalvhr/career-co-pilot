@@ -269,7 +269,7 @@
 
                     <!-- Start Header Btn  -->
                     <div class="header-btn">
-                        <a class="rainbow-gradient-btn" target="_blank" href="text-generator.html"><span>Get Start</span></a>
+                        <a class="rainbow-gradient-btn" href="{{route('login')}}"><span>Login</span></a>
                     </div>
                     <!-- End Header Btn  -->
 

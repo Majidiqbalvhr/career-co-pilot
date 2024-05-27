@@ -9,7 +9,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -32,36 +32,32 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
-    protected function login(Request $request)
+    protected function login(LoginRequest $request)
     {
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])){
             $user = User::where('id', auth()->id())->with('roles')->first();
             if ($user->hasRole('Admin')  || $user->hasRole('SuperAdmin'))
             {
                 $notificationMessage = "login success";
-                return redirect()->route('products.index')->with('notificationMessage', $notificationMessage);
+                return redirect()->route('products.index')->with('success', $notificationMessage);
             }
             else if($user->hasRole('User'))
             {
                 $notificationMessage = "login success";
-                return redirect()->route('products.index')->with('notificationMessage', $notificationMessage);
+                return redirect()->route('products.index')->with('success', $notificationMessage);
             }
 
         }
         else{
             $notificationMessage = "login failed";
-            return redirect()->route('login')->with('notificationMessage', $notificationMessage);
+            return redirect()->route('login')->with('error', $notificationMessage);
         }
     }
-    public function Registration(Request $request)
+    public function Registration(RegisterRequest $request)
     {
 
         $attribute = $request->all();
         $attribute['password'] = Hash::make($attribute['password']);
-        $attribute['type'] = "Agent";
-        $attribute['phone_number'] = $request->input('phone_number');
-        $attribute['commission_percentage'] = 40;
-        $attribute['added_by_id'] = 1000154;
         $profilePicture = $request->file('profile_picture');
         if ($profilePicture)
         {
@@ -71,15 +67,15 @@ class AuthController extends Controller
             $attribute['profile_picture'] = $profilePictureName;
         }
         $user = User::create($attribute);
-        $userRole = Role::whereName('Admin')->first();
+        $userRole = Role::whereName('User')->first();
         $user->roles()->attach($userRole);
         if ($user) {
             $notificationMessage = "User registration successful. Please log in.";
-            return redirect()->route('login')->with('notificationMessage', $notificationMessage);
+            return redirect()->route('login')->with('success', $notificationMessage);
         } else {
             // User creation failed, so return to the login page with an error message
             $notificationMessage = "User registration failed. Please try again.";
-            return redirect()->route('login')->with('notificationMessage', $notificationMessage);
+            return redirect()->route('login')->with('error', $notificationMessage);
         }
     }
     public function destroy()

@@ -29,22 +29,42 @@
                                         <span>Or continue with</span>
                                         <hr>
                                     </div>
-                                    <form>
+                                    <form  method="POST" enctype="multipart/form-data" action="{{ route('register') }}">
+                                        @csrf
                                         <div class="input-section">
                                             <div class="icon"><i class="feather-user"></i></div>
-                                            <input type="text" placeholder="Enter Your Name">
+                                            <input type="text" name="name" placeholder="Enter Your Name">
+                                            @error('name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="input-section mail-section">
                                             <div class="icon"><i class="fa-sharp fa-regular fa-envelope"></i></div>
-                                            <input type="email" placeholder="Enter email address">
+                                            <input type="email" name="email" placeholder="Enter email address">
+                                            @error('name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="input-section password-section">
                                             <div class="icon"><i class="fa-sharp fa-regular fa-lock"></i></div>
-                                            <input type="password" placeholder="Create Password">
+                                            <input type="password" name="password" placeholder="Create Password">
+                                            @error('password')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="input-section password-section">
                                             <div class="icon"><i class="fa-sharp fa-regular fa-lock"></i></div>
-                                            <input type="password" placeholder="Confirm Password">
+                                            <input type="password" name="confirm_password" placeholder="Confirm Password">
+                                            @error('confirm_password')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="input-section password-section">
+                                            <div class="icon"><i class="fa-sharp fa-regular fa-lock"></i></div>
+                                            <input type="file" name="profile_picture" placeholder="Upload Picture">
+                                            @error('profile_picture')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="forget-text"><a class="btn-read-more" href="#"><span>Forgot password</span></a></div>
                                         <button type="submit" class="btn-default">Sign Up</button>
@@ -52,7 +72,7 @@
                                 </div>
                                 <div class="signup-box-footer">
                                     <div class="bottom-text">
-                                        Do you have an account? <a class="btn-read-more ml--5" href="signin.html"><span>Sign In</span></a>
+                                        Do you have an account? <a class="btn-read-more ml--5" href="{{route('login')}}"><span>Sign In</span></a>
                                     </div>
                                 </div>
                             </div>
