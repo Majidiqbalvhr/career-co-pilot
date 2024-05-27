@@ -27,7 +27,8 @@ Route::post('/Registration',[AuthController::class,'Registration'])->name('regis
 Route::middleware('auth')->group(function(){
 Route::resource('permissions',PermissionController::class);
 Route::resource('roles',RoleController::class);
-Route::resource('products',ProductController::class);
+//Route::resource('products',ProductController::class);
 Route::POST('permissions/update', [PermissionController::class, 'permissionsUpdate'])->name('permissions.update');
 
 });
+Route::resource('products',ProductController::class);
